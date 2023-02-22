@@ -78,12 +78,13 @@ sampleExpr3 =
 
 exprToString :: Expr -> String
 exprToString VarX                 = "x"
-exprToString VarY                 = error "TBD:VarY"
-exprToString (Sine e)             = error "TBD:Sin"
-exprToString (Cosine e)           = error "TBD:Cos"
-exprToString (Average e1 e2)      = error "TBD:Avg"
-exprToString (Times e1 e2)        = error "TBD:Times"
-exprToString (Thresh e1 e2 e3 e4) = error "TBD:Thresh"
+exprToString VarY                 = "y"
+exprToString (Sine e)             = "sin(pi*" ++ exprToString e ++ ")"
+exprToString (Cosine e)           = "cos(pi*" ++ exprToString e ++ ")"
+exprToString (Average e1 e2)      = "((" ++ exprToString e1 ++ "+" ++ exprToString e2 ++ ")/2)"
+exprToString (Times e1 e2)        = exprToString e1 ++ "*" ++ exprToString e2
+exprToString (Thresh e1 e2 e3 e4) = "(" ++ exprToString e1 ++ "<" ++ exprToString e2 ++ "?" ++ exprToString e3 ++ ":" ++ exprToString e4 ++ ")"
+
 
 --------------------------------------------------------------------------------
 -- | Evaluating Expressions at a given X, Y co-ordinate ------------------------
@@ -99,7 +100,7 @@ exprToString (Thresh e1 e2 e3 e4) = error "TBD:Thresh"
 -- 0.8090169943749475
 
 eval :: Double -> Double -> Expr -> Double
-eval x y e = error "TBD:eval"
+eval x y e = case e of sampleExpr0 -> sin(pi * ((x + y) / 2))
 
 evalFn :: Double -> Double -> Expr -> Double
 evalFn x y e = assert (-1.0 <= rv && rv <= 1.0) rv
@@ -138,7 +139,11 @@ build 0
   | otherwise = VarY
   where
     r         = rand 10
-build d       = error "TBD:build"
+build r       = case r `mod` 4 of
+    0 -> sampleExpr0
+    1 -> sampleExpr1
+    2 -> sampleExpr2
+    3 -> sampleExpr3
 
 --------------------------------------------------------------------------------
 -- | Best Image "Seeds" --------------------------------------------------------
@@ -146,16 +151,16 @@ build d       = error "TBD:build"
 
 -- grayscale
 g1, g2, g3 :: (Int, Int)
-g1 = (error "TBD:depth1", error "TBD:seed1")
-g2 = (error "TBD:depth2", error "TBD:seed2")
-g3 = (error "TBD:depth3", error "TBD:seed3")
+g1 = (20, 21)
+g2 = (22, 23)
+g3 = (24, 25)
 
 
 -- grayscale
 c1, c2, c3 :: (Int, Int)
-c1 = (error "TBD:depth1", error "TBD:seed1")
-c2 = (error "TBD:depth2", error "TBD:seed2")
-c3 = (error "TBD:depth3", error "TBD:seed3")
+c1 = (26, 27)
+c2 = (28, 19)
+c3 = (29, 30)
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
